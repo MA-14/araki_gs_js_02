@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>筋トレ管理</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<header class="header_wrapper">
+  <img src="img/1.jpg" class="header_img">
+  <div class="header_m">GOLD'S GYM TRAINING NOTE</div>
+</header>
+<main>
+  <div class="s_wrapper" id="s_wrapper">
+    <button class="btn_start" id="btn_start"></button>
+    <button class="btn_rireki" id="btn_rireki"></button>
+  </div>
+
+<div class="input" id="input">
+  <span class="input_title" id="input_title">記録</span>
+  <div class="date_wrapper" id="date_wrapper">
+    <ul>
+      <li class="date_m" >日付：</li>
+      <li><input type="date" id="date" class="date"></li>
+    </ul>
+  </div>
+
+  <div class="event_wrapper" id="event_wrapper">
+    <ul>
+      <li class="event_input">種目：</li>
+      <li><input type="text" id="event_name" class="event_name"></li>
+    </ul>
+  </div>
+
+
+  <table class="record_wrapper" id="record_wrapper">
+    <tr>
+      <th class="set_title">set数</th>
+      <th class="">重量</th>
+      <th class="count_title">回数</th>
+      <th class="memo_title">メモ</th>
+    </tr>
+    <tr>
+      <td class="set_count" id="set_count"></td>      
+      <td class="weight_input"><input type="text" id="weight_input" style="width: 50px; height: 30px;"> kg</td>
+      <td class="count_input"><input type="text" id="count_input" style="width: 50px; height: 30px;"> 回</td>
+      <td class="memo_input"><textarea id="memo_input" style="width: 450px; height: 30px;"></textarea></td>
+    </tr>
+  </table>
+  <table id="list"></table>
+</div>
+  <!-- ここに追加データが挿入される -->
+
+  <div class="reset_wrapper" id="reset_wrapper">
+    <button class="reset_content" id="plus">Next set</button>
+    <button class="reset_content" id="next">次の種目へ</button>
+    <button class="reset_content" id="save">トレーニング終了</button>
+  </div>
+
+  <!-- 今日の筋トレ履歴 -->
+  <div class="end_message" id="end_message">お疲れ様でした！</div>
+  <div class="end_title" id="end_title"></div>
+  <table class="record_wrapper_today" id="record_wrapper_today">
+    <tr>
+      <th class="rireki_date_title">日付</th>
+      <th class="rireki_event_title">種目</th>
+      <th class="rireki_set_title">set数</th>
+      <th class="rireki_weight_title">重量</th>
+      <th class="rireki_count_title">回数</th>
+      <th class="rireki_memo_title">メモ</th>
+    </tr>
+  </table>
+  <table id="today_list"></table>
+  <div class="next_workout" id="next_workout">
+    <button class="next_workout_btn" id="next_workout_btn">Top画面へ</button>
+  </div>
+</main>
+<script>
+  //今日の筋トレ履歴を非表示に
+  function today_rireki_none(){
+    document.getElementById("record_wrapper_today").style.display ="none";
+    today_list.style.display ="none";
+    document.getElementById("end_message").style.display ="none";
+    document.getElementById("end_title").style.display ="none";
+    document.getElementById("next_workout").style.display ="none";
+  }
+  today_rireki_none();
+
+  //今日の筋トレ履歴を表示するファンクション作成
+  function today_rireki_table(){
+    document.getElementById("record_wrapper_today").style.display ="table";
+    document.getElementById("today_list").style.display ="table";
+    document.getElementById("end_message").style.display ="block";
+    document.getElementById("end_title").style.display ="block";
+    document.getElementById("next_workout").style.display ="block";
+  }
+
+  //input欄を非表示に
+  function input_none(){
+    input.style.display ="none";
+    document.getElementById("date_wrapper").style.display ="none";
+    document.getElementById("event_wrapper").style.display ="none";
+    document.getElementById("record_wrapper").style.display ="none";
+    document.getElementById("list").style.display ="none";
+    document.getElementById("reset_wrapper").style.display ="none";
+  }
+  input_none();
+  
+  //input欄を表示するファンクション作成
+  function input_block(){
+    input.style.display ="block";
+    document.getElementById("date_wrapper").style.display ="block";
+    document.getElementById("event_wrapper").style.display ="block";
+    document.getElementById("record_wrapper").style.display ="table";
+    document.getElementById("list").style.display ="table";
+    document.getElementById("reset_wrapper").style.display ="flex";
+  }
+
+  //スタートボタン等を非表示に
+  function start_none(){
+    document.getElementById("s_wrapper").style.display ="none";
+  }
+  //スタートボタン等を表示するファンクション作成
+  function start_flex(){
+    document.getElementById("s_wrapper").style.display ="flex";
+  }
+
+  //スタートボタンクリック
+  $("#btn_start").html("トレーニング開始");
+  $("#btn_start").on("click",function(){
+    input_block();
+    start_none();
+    localStorage.clear();
+  });
+
+  //Training履歴クリック
+  $("#btn_rireki").html("前回のトレーニング");
+  $("#btn_rireki").on("click",function(){
+    start_none();
+    today_rireki_table();
+    rireki_output();
+    document.getElementById("end_message").style.display ="none";
+    $("#end_title").html("前回のトレーニング履歴")
+  });
+
+  //セット数カウント
+  set = 1
+  //plusクリックイベント
+  $("#plus").on("click",function(){
+    const date = $("#date").val();
+    const event = $("#event_name").val();
+    const weight = $("#weight_input").val();
+    const count = $("#count_input").val();
+    const memo = $("#memo_input").val();
+    const time= Date.now();
+    //keyが一意になるようにsetまで含む
+    var key = {date,event,set}
+    var value = {weight, count, memo, time}
+    localStorage.setItem(JSON.stringify(key),JSON.stringify(value));
+    const html = `
+    <tr>
+        <td class="set_title">${set} set</td>
+        <td class="weight_title">${weight} kg</td>
+        <td class="count_title">${count} 回</td>
+        <td class="memo_title">${memo}</td>
+    </tr>`;
+    $("#list").append(html);
+    //中身クリア
+    $("#weight_input").val("");
+    $("#count_input").val("");
+    $("#memo_input").val("");
+    set++;
+  });
+
+  //nextクリックイベント
+  $("#next").on("click",function(){
+    for(let i =0; i<localStorage.length; i++){
+      const key = localStorage.key(i);
+      const value = localStorage.getItem(key);
+      const from_json_key = JSON.parse(localStorage.key(i));
+      const from_json_value = JSON.parse(localStorage.getItem(key));
+    }
+    $("#event_name").val("");
+    $("#list").empty();
+    set = 1
+  });
+
+
+  //ローカルストレージのデータを並び替えて出力するファンクション
+  function rireki_output(){
+    const array= []
+    n=0
+    for (let i =0; i<localStorage.length-1;i++){
+      //JSONをオブジェクト？に変換してkeyとvalueを結合
+      const from_json_key = JSON.parse(localStorage.key(i));
+      const from_json_value = JSON.parse(localStorage.getItem(localStorage.key(i)));
+      const from_json_keyvalue = Object.assign(from_json_key, from_json_value);
+      //オブジェクトに追加
+      array.push(from_json_keyvalue);
+      n++;
+    }
+    //最終行まで来たらオブジェクト内を並び替えてHTMLで表示する
+    if( n==localStorage.length-1){
+      const from_json_key = JSON.parse(localStorage.key(n));
+      const from_json_value = JSON.parse(localStorage.getItem(localStorage.key(n)));
+      const from_json_keyvalue = Object.assign(from_json_key, from_json_value);
+      array.push(from_json_keyvalue);
+      //オブジェクト内をタイムスタンプの順番に並び替え
+      const array_sort = [...array].sort((a, b) => a.time - b.time);
+      //array_sort内のオブジェクトを順番に出力
+      for(let i =0; i<localStorage.length; i++){
+        const value = array_sort[i];
+        const html_today = `
+          <tr>
+              <td class="rireki_date_title">${value.date}</td>
+              <td class="rireki_event_title">${value.event}</td>
+              <td class="rireki_set_title">${value.set} set</td>
+              <td class="rireki_weight_title">${value.weight} kg</td>
+              <td class="rireki_count_title">${value.count} 回</td>
+              <td class="rireki_memo_title">${value.memo}</td>
+          </tr>`;
+        $("#today_list").append(html_today);
+      }
+    }
+  }
+  //Traning終了ボタンクリック
+  $("#save").on("click",function(){
+    $("#list").empty();
+    today_rireki_table();
+    input_none();
+    rireki_output();
+    $("#end_title").html("今日のトレーニング履歴")
+  });
+
+  //スタート画面へボタンをクリック
+  $("#next_workout_btn").on("click",function(){
+    today_rireki_none();
+    start_flex();
+    $("#today_list").empty();
+  });
+
+</script>  
+
+</body>
+</html>

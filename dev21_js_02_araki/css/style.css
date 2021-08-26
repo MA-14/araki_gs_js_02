@@ -1,0 +1,266 @@
+body{
+  font-family: serif;
+  background-color: rgb(248, 247, 232);
+}
+
+.header_wrapper{
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.header_m{
+  margin: 15px 0 20px;
+  font-size: 30px;
+  font-weight: bold;
+  text-align: center;
+  font-family: serif;
+}
+.header_img{
+  margin-right: 20px;
+  width: 70px;
+  height: 70px;
+}
+
+.s_wrapper{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.btn_start{
+  color: #000;
+  background-color: #fff100;
+  box-shadow: 0 5px #ccc100;
+  height: 40px;
+  width: 200px;
+  font-size: 16px;
+  font-weight: bold;
+  margin: 20px 0 40px;
+}
+
+.btn_rireki{
+  color: #000;
+  background-color: #fff100;
+  box-shadow: 0 5px #ccc100;
+  height: 40px;
+  width: 200px;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.input {
+  position: relative;
+  margin: 2em 0;
+  padding: 0.5em 1em;
+  border: solid 3px #5d627b;
+}
+
+.input .input_title {
+  position: absolute;
+  display: inline-block;
+  top: -27px;
+  left: -3px;
+  padding: 0 9px;
+  height: 25px;
+  line-height: 25px;
+  font-size: 17px;
+  background: #5d627b;
+  color: #ffffff;
+  font-weight: bold;
+  border-radius: 5px 5px 0 0;
+}
+
+.date_m{
+  font-size: 20px;
+  font-weight: bold;
+  font-family: serif;
+}
+.date{
+  height: 24px;
+  width: 200px;
+  margin-top: 2px;
+}
+
+ul {
+  display: flex;
+  list-style: none;
+  padding: 0;
+}
+
+.date_wrapper{
+  width: 100%;
+  float: left;
+  display: flex;
+}
+
+.event_input{
+  font-size: 20px;
+  font-weight: bold;
+  font-family: serif;
+}
+
+.event_name{
+  height: 24px;
+  width: 200px;
+  margin-top: 2px;
+}
+
+.event_wrapper{
+  margin: 0 0 28px;
+  display: flex;
+  float: left;
+}
+
+.record_wrapper{
+  margin:0 auto;
+  text-align: center;
+}
+
+.reset_wrapper{
+  margin: 40px 0 40px;
+  display: flex;
+  justify-content: center;
+}
+
+#list{
+  margin-bottom: 20px;
+}
+
+.reset_content{
+  color: #000;
+  background-color: #fff100;
+  /* border-bottom: 5px solid #ccc100; */
+  box-shadow: 0 5px #ccc100;
+  height: 40px;
+  width: 120px;
+  font-size: 13px;
+  font-weight: bold;
+}
+
+.btn:hover {
+  /* margin-top: 3px; */
+  box-shadow: none;
+  transform: translate(0, 3px);
+  color: #000;
+  background: #fff20a;
+  border-bottom: 2px solid #ccc100;
+}
+
+#next{
+  margin: 0 50px;
+}
+
+table{
+  width: 100%;
+  border-collapse:separate;
+  border-spacing: 0;
+}
+
+table th:first-child{
+  border-radius: 5px 0 0 0;
+}
+
+table th:last-child{
+  border-radius: 0 5px 0 0;
+  border-right: 1px solid #3c6690;
+}
+
+table th{
+  text-align: center;
+  color:black;
+  background: linear-gradient(#fff100,#fafc44);
+  border-left: 1px solid #a8b7c5;
+  border-top: 1px solid #a8b7c5;
+  border-bottom: 1px solid #a8b7c5;
+  box-shadow: 0px 1px 1px rgba(255,255,255,0.3) inset;
+
+  padding: 10px 0;
+}
+
+table td{
+  text-align: center;
+  border-left: 1px solid #a8b7c5;
+  border-bottom: 1px solid #a8b7c5;
+  border-top:none;
+  box-shadow: 0px -3px 5px 1px #eee inset;
+
+  padding: 2px 0;
+}
+
+table td:last-child{
+  border-right: 1px solid #a8b7c5;
+}
+
+table tr:last-child td:first-child {
+  border-radius: 0 0 0 5px;
+}
+
+table tr:last-child td:last-child {
+  border-radius: 0 0 5px 0;
+}
+
+.set_title{
+  width: 10%;
+}
+.weight_title{
+  width: 15%;
+}
+.count_title{
+  width: 15%;
+}
+.memo_title{
+  width: 60%;
+}
+
+.memo_input{
+  padding-top: 6px;
+}
+
+.rireki_date_title{
+  width: 15%;
+}
+.rireki_event_title{
+  width: 15%;
+}
+.rireki_set_title{
+  width: 10%;
+}
+.rireki_weight_title{
+  width: 10%;
+}
+.rireki_count_title{
+  width: 10%;
+}
+.rireki_memo_title{
+  width: 40%;
+}
+
+.next_workout{
+text-align: center;
+}
+
+.next_workout_btn{
+    color: #000;
+    background-color: #fff100;
+    box-shadow: 0 5px #ccc100;
+    height: 40px;
+    width: 200px;
+    font-size: 16px;
+    font-weight: bold;
+    margin: 50px 0 40px;
+}
+
+.end_message{
+  font-size: 24px;
+  font-weight: bold;
+  font-family: serif;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.end_title{
+  font-size: 20px;
+  font-weight: bold;
+  font-family: serif;
+}
